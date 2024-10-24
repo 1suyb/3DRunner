@@ -2,6 +2,7 @@ using System;
 using TMPro.EditorUtilities;
 using UnityEngine;
 
+[Serializable]
 public class ConditionSystem
 {
 	private int _maxCondition;
@@ -19,7 +20,7 @@ public class ConditionSystem
 
 	private bool _isBelowThreshold;
 
-	public event Action<int> OnChangeConditionEvent;
+	public event Action<int,int> OnChangeConditionEvent;
 	public event Action OnBelowThresholdEvent;
 	public event Action OnAvobeThresholdEvent;
 	public event Action OnExhaustEvent;
@@ -29,7 +30,7 @@ public class ConditionSystem
 		private set
 		{
 			_condition = Mathf.Clamp(value, 0, MaxCondition);
-			OnChangeConditionEvent?.Invoke(_condition);
+			OnChangeConditionEvent?.Invoke(_condition,_maxCondition);
 			if (_condition < _threshold)
 			{
 				if (!_isBelowThreshold)

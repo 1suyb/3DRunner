@@ -4,7 +4,7 @@ public class ConditionHandler : MonoBehaviour
 {
 	enum ConditionType
 	{
-		Health,
+		Health = 0,
 		Hunger,
 		Stamina
 	}
@@ -14,10 +14,13 @@ public class ConditionHandler : MonoBehaviour
 
 	private void Awake()
 	{
-		_statHandler = new UnitStatHandler();
+		_statHandler = GetComponent<UnitStatHandler>();
+
+
 	}
 	private void Start()
 	{
+		Debug.Log((int)ConditionType.Health);
 		conditions[(int)ConditionType.Health].Init(_statHandler.CurrentStat.Health);
 		conditions[(int)ConditionType.Hunger].Init(_statHandler.CurrentStat.Hunger);
 		conditions[(int)ConditionType.Stamina].Init(_statHandler.CurrentStat.Stamina);
