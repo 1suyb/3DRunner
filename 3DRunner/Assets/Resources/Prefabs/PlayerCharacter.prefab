@@ -244,6 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76fa1d8c00a4e0448a05e188053b1f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 384
 --- !u!114 &490040929953646453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,17 +301,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseStats:
-    Type: 2
-    Health: 100
-    Hunger: 500
-    Stamina: 100
-    PassiveHealthRecovery: 5
-    PassiveHealthDecline: 3
-    PassiveHungerDecline: 10
-    passiveStaminaRecovery: 10
-    WalkSpeed: 5
-    RunSpeed: 8
-    JumpForce: 30
+    _type: 0
+    _health: 100
+    _hunger: 500
+    _stamina: 100
+    _passiveHealthRecovery: 5
+    _passiveHealthDecline: 3
+    _passiveHungerDecline: 10
+    _passiveStaminaRecovery: 5
+    _walkSpeed: 7
+    _runSpeed: 9
+    _jumpForce: 10
   statsModifiers: []
 --- !u!114 &2449886183119797521
 MonoBehaviour:

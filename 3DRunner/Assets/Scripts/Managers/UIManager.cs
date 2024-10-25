@@ -13,6 +13,7 @@ public enum PopupUIType
 	MenuPopup,
 	OptionPopup,
 	InteractiveInfoPopup,
+	ItemInfoPopup,
 }
 
 public class UIManager : Singleton<UIManager> 
@@ -24,7 +25,7 @@ public class UIManager : Singleton<UIManager>
 
 	private int _sortOrder = 10;
 
-	public T OpenPopup<T>(PopupUIType popupType, Transform parent) where T : UIPopup
+	public T OpenPopup<T>(PopupUIType popupType, Transform parent = null) where T : UIPopup
 	{
 		GameObject popup = null;
 		if (!_cache.TryGetValue(popupType, out popup))
@@ -48,9 +49,10 @@ public class UIManager : Singleton<UIManager>
 		List<T> uis = new List<T>();
 		GameObject[] sceneUIs =  ResourceManager.InstantiateAll($"{sceneName.ToString()}/UI", parent);
 		_currentSceneUI = sceneUIs.ToList<GameObject>();
+		Debug.Log(sceneUIs.Length);
 		for (int i = 0; i < sceneUIs.Length; i++)
 		{
-			uis.Add(uis[i].GetComponent<T>());
+			uis.Add(sceneUIs[i].GetComponent<T>());
 		}
 		return uis;
 	}

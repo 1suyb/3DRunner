@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIConditionPanel : MonoBehaviour
+public class UIConditionPanel : UI
 {
 	private UICondition[] _conditionUIs;
 	private ConditionHandler _playerConditionHandler;
@@ -18,7 +18,7 @@ public class UIConditionPanel : MonoBehaviour
 			Subscribe();
 		}
 	}
-	public void Init()
+	public override void Init()
 	{
 		_playerConditionHandler = GameManager.Instance.Player.ConditionHandler;
 		Subscribe();
@@ -44,6 +44,10 @@ public class UIConditionPanel : MonoBehaviour
 			UnSubscribe();
 		}
 	}
-			
 
+
+	public override void Close()
+	{
+		this.gameObject.SetActive(false);
+	}
 }

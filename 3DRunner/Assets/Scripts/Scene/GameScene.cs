@@ -23,6 +23,5 @@ public class GameScene : MonoBehaviour
 	}
 	private void Start()
 	{
-		ui.gameObject.SetActive(true);
 	}
 }

@@ -32,10 +32,10 @@ public class UnitStat
 	public int Hunger => _hunger;
 	public int Stamina => _stamina;
 
-	public int PassiveHealthRecovery => PassiveHealthRecovery;
-	public int PassiveHealthDecline => PassiveHealthDecline;
-	public int PassiveHungerDecline => PassiveHungerDecline;
-	public int passiveStaminaRecovery => passiveStaminaRecovery;
+	public int PassiveHealthRecovery => _passiveHealthRecovery;
+	public int PassiveHealthDecline => _passiveHealthDecline;
+	public int PassiveHungerDecline => _passiveHungerDecline;
+	public int passiveStaminaRecovery => _passiveStaminaRecovery;
 
 	public int WalkSpeed => _walkSpeed;
 	public int RunSpeed => _runSpeed;

@@ -10,7 +10,7 @@ public class ItemObject : MonoBehaviour
 
 	private void Start()
 	{
-		_itemData = DataManager.Instance.ItemDB.Data[_id];
+		_itemData = DataManager.Instance.ItemDB[_id];
 	}
 
 	public List<string> GetItemInfoString()

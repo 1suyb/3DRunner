@@ -21,7 +21,7 @@ public class ResourceManager
 
 	public static T[] LoadAll<T> (string path) where T : Object
 	{
-		return Resources.LoadAll<T>(path);
+		return Resources.LoadAll<T>($"Prefabs/{path}");
 	}
 
 	public static GameObject[] InstantiateAll(string path, Transform parent = null)
