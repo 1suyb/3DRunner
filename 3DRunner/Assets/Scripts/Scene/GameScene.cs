@@ -9,9 +9,20 @@ public class GameScene : MonoBehaviour
 		PlayerCharacter,
 		Canvas
 	}
+	UIConditionPanel ui;
 	private void Awake()
 	{
-		ResourceManager.Instantiate(Objects.PlayerCharacter.ToString());
-		UIManager.Instance.OpenUI(Objects.Canvas.ToString());
+		GameObject obj = ResourceManager.Instantiate(Objects.PlayerCharacter.ToString());
+		obj.GetComponent<ConditionHandler>().Init();
+		GameObject uiRoot = new GameObject("SceneUIRoot");
+		List<UI> uiObjects = UIManager.Instance.OpenScene<UI>(SceneName.SampleScene, uiRoot.transform);
+		foreach(UI uiObject in uiObjects)
+		{
+			uiObject.Init();
+		}
+	}
+	private void Start()
+	{
+		ui.gameObject.SetActive(true);
 	}
 }

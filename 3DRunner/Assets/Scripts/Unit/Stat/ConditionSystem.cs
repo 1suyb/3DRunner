@@ -61,11 +61,11 @@ public class ConditionSystem
 		_condition = maxCondition;
 	}
 
-	public void AddHealth(int value)
+	public void Add(int value)
 	{
 		Condition += value;
 	}
-	public void SubtractHealth(int value)
+	public void Subtract(int value)
 	{
 		Condition -= value;
 	}

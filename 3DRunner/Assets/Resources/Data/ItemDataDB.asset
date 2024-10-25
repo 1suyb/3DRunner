@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58285b8fc5ba0384a8e0ebfc6ff260d9, type: 3}
+  m_Name: ItemDataDB
+  m_EditorClassIdentifier: 
+  Data:
+  - ID: 10001
+    Name: "\uBD89\uC740\uAF43"
+    Type: 0
+    Description: "\uCD5C\uB300 \uC2A4\uD0DC\uBBF8\uB098\uAC00 \uC99D\uAC00\uD558\uB294
+      \uC791\uC740 \uBD89\uC740 \uAF43 \uC785\uB2C8\uB2E4. \uB9DB\uC740 \uC5C6\uC744\uC9C0\uB3C4."
+    Health: 0
+    MaxHealth: 0
+    Hunger: 0
+    MaxHunger: 0
+    Stamina: 0
+    MaxStamina: 50
+    WalkSpeed: 0
+    RunSpeed: 0
+    JumpForce: 0
+    CanStack: 1
+    MaxStackAmount: 30
+  - ID: 11001
+    Name: "\uBB34\uB978 \uB3CC"
+    Type: 1
+    Description: "\uBCC4 \uBCFC\uC77C \uC5C6\uC2B5\uB2C8\uB2E4."
+    Health: 0
+    MaxHealth: 0
+    Hunger: 0
+    MaxHunger: 0
+    Stamina: 0
+    MaxStamina: 0
+    WalkSpeed: 0
+    RunSpeed: 0
+    JumpForce: 0
+    CanStack: 0
+    MaxStackAmount: 0
+  - ID: 10002
+    Name: "\uD325"
+    Type: 0
+    Description: "\uCCB4\uB825\uC744 \uD68C\uBCF5\uD569\uB2C8\uB2E4. \uD325\uC559\uAE08\uC740
+      \uB9DB\uC788\uB294\uB370 \uADF8\uB0E5 \uC0DD\uD325\uC774\uB77C \uB9DB\uC5C6\uC2B5\uB2C8\uB2E4."
+    Health: 50
+    MaxHealth: 0
+    Hunger: 0
+    MaxHunger: 0
+    Stamina: 0
+    MaxStamina: 0
+    WalkSpeed: 0
+    RunSpeed: 0
+    JumpForce: 0
+    CanStack: 1
+    MaxStackAmount: 30

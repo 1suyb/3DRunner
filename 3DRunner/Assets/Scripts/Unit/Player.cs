@@ -15,6 +15,5 @@ public class Player : MonoBehaviour
 		_statHandler = GetComponent<UnitStatHandler>();
 		_conditionHandler = GetComponent<ConditionHandler>();
 		GameManager.Instance.Player = this;
-
 	}
 }

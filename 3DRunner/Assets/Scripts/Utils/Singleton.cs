@@ -10,16 +10,29 @@ public class Singleton<T> : MonoBehaviour where T : Component
 	{
 		get
 		{
-			if (_instance == null)
-			{
-				_instance = GameObject.FindAnyObjectByType<T>();
-				if (_instance == null)
-				{
-					_instance = new GameObject(typeof(T).Name).AddComponent<T>();
-					DontDestroyOnLoad(_instance.gameObject);
-				}
-			}
+			Init();
 			return _instance;
 		}
 	}
+	private static void Init()
+	{
+		if (_instance == null)
+		{
+			_instance = (T)FindObjectOfType(typeof(T));
+			if (_instance == null)
+			{
+				_instance = new GameObject(typeof(T).ToString()).AddComponent<T>();
+				
+			}
+		}
+	}
+	private void Awake()
+	{
+		if (_instance == null)
+		{
+			_instance = this as T;
+			DontDestroyOnLoad(_instance);
+		}
+	}
 }
+

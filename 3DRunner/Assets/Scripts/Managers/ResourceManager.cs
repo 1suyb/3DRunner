@@ -11,7 +11,28 @@ public class ResourceManager
 
 	public static GameObject Instantiate(string path, Transform parent=null)
 	{
-		return GameObject.Instantiate(Load<GameObject>($"Prefabs/{path}"), parent);
+		return Instantiate(Load<GameObject>($"Prefabs/{path}"), parent);
+	}
+
+	public static GameObject Instantiate(GameObject gameObject, Transform parent=null)
+	{
+		return GameObject.Instantiate<GameObject>(gameObject, parent);
+	}
+
+	public static T[] LoadAll<T> (string path) where T : Object
+	{
+		return Resources.LoadAll<T>(path);
+	}
+
+	public static GameObject[] InstantiateAll(string path, Transform parent = null)
+	{
+		GameObject[] sources = LoadAll<GameObject>(path);
+		GameObject[] objects = new GameObject[sources.Length];
+		for(int i = 0; i < sources.Length; i++)
+		{
+			objects[i] = Instantiate(sources[i], parent);
+		}
+		return objects;
 	}
 
 }

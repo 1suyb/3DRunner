@@ -139,10 +139,10 @@ GameObject:
   - component: {fileID: 6597098851868686266}
   - component: {fileID: 3745639406964202096}
   - component: {fileID: 3685922071937519521}
-  - component: {fileID: 2158276316356962507}
+  - component: {fileID: 8608815596183168868}
   - component: {fileID: 6917705940754877888}
-  - component: {fileID: 5429235804409852578}
   - component: {fileID: 490040929953646453}
+  - component: {fileID: 2158276316356962507}
   - component: {fileID: 3185284342723066749}
   - component: {fileID: 6737346276951394763}
   - component: {fileID: 2449886183119797521}
@@ -220,7 +220,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &2158276316356962507
+--- !u!114 &8608815596183168868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3210589163590521164}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8e11569bc468c649aa927c236813302, type: 3}
+  m_Script: {fileID: 11500000, guid: 975c930c5ec42544fb5035b00ee54477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6917705940754877888
@@ -244,18 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76fa1d8c00a4e0448a05e188053b1f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5429235804409852578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3210589163590521164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5816c3040b8db5479577b8402c094f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &490040929953646453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +254,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e0dbc7a80d29c146a5488bde33d6a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2158276316356962507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3210589163590521164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8e11569bc468c649aa927c236813302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3185284342723066749
@@ -302,12 +302,12 @@ MonoBehaviour:
     Health: 100
     Hunger: 500
     Stamina: 100
-    PassiveHealthRecovery: 0
-    PassiveHealthDecline: 0
-    PassiveHungerDecline: 0
-    passiveStaminaRecovery: 0
-    WalkSpeed: 1
-    RunSpeed: 2
+    PassiveHealthRecovery: 5
+    PassiveHealthDecline: 3
+    PassiveHungerDecline: 10
+    passiveStaminaRecovery: 10
+    WalkSpeed: 5
+    RunSpeed: 8
     JumpForce: 30
   statsModifiers: []
 --- !u!114 &2449886183119797521
