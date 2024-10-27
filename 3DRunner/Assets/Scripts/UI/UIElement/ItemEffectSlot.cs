@@ -6,7 +6,14 @@ using UnityEngine;
 
 public class ItemEffectSlot : MonoBehaviour
 {
+	[SerializeField] private TMP_Text _effectName;
 	[SerializeField] private TMP_Text _text;
+
+	public void Init(string name, string value)
+	{
+		_effectName.text = value;
+		Init(value);
+	}
 	public void Init(string value) 
 	{
 		if(value != "0")

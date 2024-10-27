@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58285b8fc5ba0384a8e0ebfc6ff260d9, type: 3}
+  m_Script: {fileID: 11500000, guid: ce3530382e70b5c468abecd2f9959b40, type: 3}
   m_Name: ItemDataDB
   m_EditorClassIdentifier: 
   Data:
@@ -27,6 +27,7 @@ MonoBehaviour:
     WalkSpeed: 0
     RunSpeed: 0
     JumpForce: 0
+    Duration: 60
     CanStack: 1
     MaxStackAmount: 30
   - ID: 11001
@@ -42,6 +43,7 @@ MonoBehaviour:
     WalkSpeed: 0
     RunSpeed: 0
     JumpForce: 0
+    Duration: 0
     CanStack: 0
     MaxStackAmount: 0
   - ID: 10002
@@ -58,5 +60,6 @@ MonoBehaviour:
     WalkSpeed: 0
     RunSpeed: 0
     JumpForce: 0
+    Duration: 0
     CanStack: 1
     MaxStackAmount: 30

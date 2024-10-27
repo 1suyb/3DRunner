@@ -1,14 +1,6 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-
-public enum ItemType
-{
-    Consumable,
-    Resource,
-}
-
-
+using UnityEngine; 
 [Serializable] 
 public class ItemData
 {
@@ -25,8 +17,9 @@ public class ItemData
    public int WalkSpeed;
    public int RunSpeed;
    public int JumpForce;
+   public float Duration;
    public bool CanStack;
-   public int MaxStackAmount;
+   public int MaxStackAmount;
 
 
    public ItemData(
@@ -43,9 +36,10 @@ public class ItemData
        int walkspeed,
        int runspeed,
        int jumpforce,
+       float duration,
        bool canstack,
-       int maxstackamount
-       )
+       int maxstackamount
+   )
     {
        ID = id;
        Name = name;
@@ -60,8 +54,9 @@ public class ItemData
        WalkSpeed = walkspeed;
        RunSpeed = runspeed;
        JumpForce = jumpforce;
+       Duration = duration;
        CanStack = canstack;
-       MaxStackAmount = maxstackamount;
+       MaxStackAmount = maxstackamount;
 
     }
    public ItemData(){}

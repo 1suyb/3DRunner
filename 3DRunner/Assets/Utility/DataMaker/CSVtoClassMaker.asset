@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b23587670042f4d47ab2ef9bb193713d, type: 3}
+  m_Script: {fileID: 11500000, guid: 05f41a2243ad4964fb052ffc1f98d12b, type: 3}
   m_Name: CSVtoClassMaker
   m_EditorClassIdentifier: 
-  _csvFile: {fileID: 4900000, guid: e217c90535ac65d4a9b183389d0dab0b, type: 3}
+  _csvFile: {fileID: 4900000, guid: 0bf5be510bc2f7445995ed537af760a7, type: 3}

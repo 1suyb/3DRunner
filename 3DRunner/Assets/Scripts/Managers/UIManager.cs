@@ -43,6 +43,10 @@ public class UIManager : Singleton<UIManager>
 		_popup.Remove(popup);
 		popup.GetComponent<UI>().Close();	
 	}
+	public void ClosePopup(PopupUIType popup)
+	{
+		ClosePopup(_cache[popup]);
+	}
 
 	public List<T> OpenScene<T>(SceneName sceneName, Transform parent = null) where T : UI
 	{

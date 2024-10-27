@@ -12,7 +12,8 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	private bool _firstTabSuccess = false;
 	private bool _isRunning = false;
 
-	private ItemObject _tempItem = null;
+	private bool _isLookInteractableObject = false;
+	private InteractionObject _tempInteractable = null;
 
 	private void Awake()
 	{
@@ -106,23 +107,19 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 		Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward);
 		if (Physics.Raycast(ray, out RaycastHit hit, 10f, layerMask))
 		{
-			if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Item"))
+			if (!_isLookInteractableObject)
 			{
-				
-
-				if (_tempItem == null)
-				{
-					Debug.Log(hit.collider.gameObject.name);
-					UIItemInteractPopup ui = UIManager.Instance.OpenPopup<UIItemInteractPopup>(PopupUIType.ItemInfoPopup);
-					_tempItem = hit.collider.gameObject.GetComponentInParent<ItemObject>();
-					Debug.Log(_tempItem);
-					ui.Init(_tempItem.GetItemInfoString());
-				}
+				_isLookInteractableObject = true;
+				_tempInteractable = hit.collider.gameObject.GetComponentInParent<InteractionObject>();
+				_tempInteractable.ShowInformation();
 			}
-			else
+		}
+		else
+		{
+			if (_isLookInteractableObject)
 			{
-				if (_tempItem != null)
-					_tempItem = null;
+				_isLookInteractableObject= false;
+				_tempInteractable.CloseInformation();
 			}
 		}
 	}

@@ -1,0 +1,5 @@
+﻿ID,Name,Type,Description,Health,MaxHealth,Hunger,MaxHunger,Stamina,MaxStamina,WalkSpeed,RunSpeed,JumpForce,Duration,CanStack,MaxStackAmount
+int,string,int,string,int,int,int,int,int,int,int,int,int,float,bool,int
+10001,붉은꽃,0,최대 스태미나가 증가하는 작은 붉은 꽃 입니다. 맛은 없을지도.,0,0,0,0,0,50,0,0,0,60,TRUE,30
+11001,무른 돌,1,별 볼일 없습니다.,0,0,0,0,0,0,0,0,0,0,FALSE,0
+10002,팥,0,체력을 회복합니다. 팥앙금은 맛있는데 그냥 생팥이라 맛없습니다.,50,0,0,0,0,0,0,0,0,0,TRUE,30

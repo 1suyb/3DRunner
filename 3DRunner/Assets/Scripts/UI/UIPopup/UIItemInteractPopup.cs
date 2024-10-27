@@ -17,14 +17,13 @@ public class UIItemInteractPopup : UIPopup
 		JumpForce,
 		End,
 	}
-	[SerializeField] private ItemEffectSlot[] _itemEffectSlots;
 
+	private void Awake()
+	{
+	}
 	public void Init(List<string> itemInfo)
 	{
 		base.Init(itemInfo[0], itemInfo[1]);
-		for(int i = 0; i < (int)SlotType.End; i++)
-		{
-			_itemEffectSlots[i].Init(itemInfo[i+1]);
-		}
 	}
+
 }
