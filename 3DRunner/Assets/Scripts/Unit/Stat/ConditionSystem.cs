@@ -7,22 +7,19 @@ public class ConditionSystem
 {
 	private int _maxCondition;
 	private int _condition;
-	private int _threshold;
 
 	public int MaxCondition {
 		get => _maxCondition;
 		set
 		{
 			_maxCondition = value;
-			_threshold = _maxCondition / 3;
 		}
 	}
 
 	private bool _isBelowThreshold;
 
 	public event Action<int,int> OnChangeConditionEvent;
-	public event Action OnBelowThresholdEvent;
-	public event Action OnAvobeThresholdEvent;
+
 	public event Action OnExhaustEvent;
 	public int Condition
 	{
@@ -31,23 +28,6 @@ public class ConditionSystem
 		{
 			_condition = Mathf.Clamp(value, 0, MaxCondition);
 			OnChangeConditionEvent?.Invoke(_condition,_maxCondition);
-			if (_condition < _threshold)
-			{
-				if (!_isBelowThreshold)
-				{
-					_isBelowThreshold = true;
-					OnBelowThresholdEvent?.Invoke();
-				}
-					
-			}
-			else
-			{
-				if (_isBelowThreshold)
-				{
-					_isBelowThreshold = false;
-					OnAvobeThresholdEvent?.Invoke();
-				}
-			}
 			if (_condition == 0)
 			{
 				OnExhaustEvent?.Invoke();

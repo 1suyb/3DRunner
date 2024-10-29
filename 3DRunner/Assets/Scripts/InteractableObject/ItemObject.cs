@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,9 +32,13 @@ public class ItemObject : MonoBehaviour, IInteractable
 		return info;
 	}
 
-	public void Use(out UnitStat stat, out int health, out int hunger, out int stamina)
+	public void Use()
 	{
-		stat = new UnitStatBuilder()
+		Player player = GameManager.Instance.Player;
+		player.GetComponent<IRecoverable>().Recovery(_itemData.Health);
+		player.GetComponent<ConditionHandler>().GetHunger.Add(_itemData.Hunger);
+		player.GetComponent<ConditionHandler>().GetStamina.Add(_itemData.Stamina);
+		UnitStat stat = new UnitStatBuilder()
 			.Type((StatsChangeType)_itemData.Type)
 			.Health(_itemData.MaxHealth)
 			.Hunger(_itemData.MaxHunger)
@@ -44,9 +47,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 			.RunSpeed(_itemData.RunSpeed)
 			.JumpForce(_itemData.JumpForce)
 			.Build();
-		health = _itemData.Health;
-		hunger = _itemData.Hunger;
-		stamina = _itemData.Stamina;
+		player.GetComponent<UnitStatHandler>().AddStatModifier(stat, _itemData.Duration);
 	}
 
     public void ShowInformation()
@@ -56,7 +57,7 @@ public class ItemObject : MonoBehaviour, IInteractable
     }
 	public void Interact()
 	{
-		Debug.Log("Interact!");
+		Use();
 	}
 
 	public void CloseInformation()

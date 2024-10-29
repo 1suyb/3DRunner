@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerLook : MonoBehaviour
 {
@@ -19,7 +15,7 @@ public class PlayerLook : MonoBehaviour
 	private float _cameraCurrentXRot;
 
 	private bool _isLookInteractableObject = false;
-	private InteractionObject _tempInteractable = null;
+	private IInteractable _tempInteractable = null;
 
 
 
@@ -30,7 +26,14 @@ public class PlayerLook : MonoBehaviour
 	private void Start()
 	{
 		_controller.Looking += Look;
+		_controller.OnInteractionEvent += Interact;
 	}
+
+	private void Interact()
+	{
+		_tempInteractable.Interact();
+	}
+
 	private void Update()
 	{
 		DetectInteractObject();
@@ -65,7 +68,7 @@ public class PlayerLook : MonoBehaviour
 			if (!_isLookInteractableObject)
 			{
 				_isLookInteractableObject = true;
-				_tempInteractable = hit.collider.gameObject.GetComponentInParent<InteractionObject>();
+				_tempInteractable = hit.collider.gameObject.GetComponentInParent<IInteractable>();
 				_tempInteractable.ShowInformation();
 			}
 		}

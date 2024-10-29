@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 5314981878040405854}
   m_Layer: 6
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,6 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e11569bc468c649aa927c236813302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _jumpSpendStamina: 10
+  _runSpendStamina: 5
 --- !u!114 &3185284342723066749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +302,6 @@ MonoBehaviour:
     _walkSpeed: 7
     _runSpeed: 9
     _jumpForce: 50
-  statsModifiers: []
 --- !u!114 &2449886183119797521
 MonoBehaviour:
   m_ObjectHideFlags: 0

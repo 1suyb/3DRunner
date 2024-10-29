@@ -1,7 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ConditionHandler : MonoBehaviour
+public interface IDamagable
+{
+	public void TakeDamage(int value);
+}
+
+public interface IRecoverable
+{
+	public void Recovery(int value);
+}
+
+
+public class ConditionHandler : MonoBehaviour, IDamagable, IRecoverable
 {
 	enum ConditionType
 	{
@@ -10,6 +21,7 @@ public class ConditionHandler : MonoBehaviour
 		Stamina = 2
 	}
 
+	private UnitMovement _movement;
 	private UnitStatHandler _statHandler;
 	private ConditionSystem[] conditions = new ConditionSystem[3];
 
@@ -26,6 +38,7 @@ public class ConditionHandler : MonoBehaviour
 	private void Awake()
 	{
 		_statHandler = GetComponent<UnitStatHandler>();
+		_movement = GetComponent<UnitMovement>();
 	}
 	public void Init()
 	{
@@ -41,9 +54,19 @@ public class ConditionHandler : MonoBehaviour
 		_statHandler.OnchangeStat += (stat) => { conditions[(int)ConditionType.Hunger].MaxCondition = stat.Hunger; };
 		_statHandler.OnchangeStat += (stat) => { conditions[(int)ConditionType.Stamina].MaxCondition = stat.Stamina; };
 
+
 		Coroutine = UpdateConditions();
 		StartUpdateConditions();
 		GetHealth.OnExhaustEvent += StopUpdateConditions;
+	}
+
+	public void Recovery(int value)
+	{
+		GetHealth.Add(value);
+	}
+	public void TakeDamage(int value)
+	{
+		GetHealth.Subtract(value);
 	}
 
 	private void StopUpdateConditions()
@@ -54,7 +77,6 @@ public class ConditionHandler : MonoBehaviour
 	{
 		StartCoroutine(Coroutine);
 	}
-
 	private IEnumerator UpdateConditions()
 	{
 		while(true)
@@ -68,7 +90,14 @@ public class ConditionHandler : MonoBehaviour
 			{
 				GetHealth.Add(_statHandler.CurrentStat.PassiveHealthRecovery);
 			}
-			GetStamina.Add(_statHandler.CurrentStat.passiveStaminaRecovery);
+			if(_movement.IsRun)
+			{
+				GetStamina.Subtract(_movement.RunSpendStamina);
+			}
+			else
+			{
+				GetStamina.Add(_statHandler.CurrentStat.passiveStaminaRecovery);
+			}
 			yield return _spendTime;
 		}
 	}

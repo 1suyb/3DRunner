@@ -1,5 +1,4 @@
-using System.Security;
-using UnityEditor.Rendering;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Interactions;
@@ -7,6 +6,8 @@ using UnityEngine.InputSystem.Interactions;
 public class PlayerController : UnitController, PlayerInputActionSetting.IPlayerActions
 {
 	[SerializeField] private PlayerInputActionSetting _inputActions;
+
+	public event Action OnInteractionEvent;
 
 	private bool _firstTabSuccess = false;
 	private bool _isRunning = false;
@@ -23,9 +24,6 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	{
 		Cursor.lockState = CursorLockMode.Locked;
 	}
-
-
-
 	public void ToggleCursor(bool toggle)
 	{
 		Cursor.lockState = toggle? CursorLockMode.None : CursorLockMode.Locked;
@@ -33,7 +31,10 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 
 	public void OnInteraction(InputAction.CallbackContext context)
 	{
-		Debug.Log("InteractionButton");
+		if(context.performed)
+		{
+			OnInteractionEvent?.Invoke();
+		}
 	}
 
 	public void OnJump(InputAction.CallbackContext context)

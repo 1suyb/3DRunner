@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using TMPro;
 using UnityEngine;
 
 public class UnitMovement : MonoBehaviour
@@ -10,11 +6,18 @@ public class UnitMovement : MonoBehaviour
 	private float _walkSpeed;
 	private float _jump;
 
+	[SerializeField] private int _jumpSpendStamina;
+	[SerializeField] private int _runSpendStamina;
+
+	public int RunSpendStamina => _runSpendStamina;
+
 	private Vector3 _moveDir;
 	private UnitController _controller;
 	private Rigidbody _rigidbody;
 	private UnitStatHandler _statHandler;
 	private bool _isRun;
+
+	public bool IsRun => _isRun;
 
 
 	private void Awake()
@@ -62,6 +65,7 @@ public class UnitMovement : MonoBehaviour
 	private void Jump()
 	{
 		_rigidbody.AddForce(transform.up * _jump, ForceMode.Impulse);
+		GetComponent<ConditionHandler>().GetStamina.Subtract(_jumpSpendStamina);
 	}
 
 	private void Run()

@@ -25,9 +25,9 @@ MonoBehaviour:
     Stamina: 0
     MaxStamina: 50
     WalkSpeed: 0
-    RunSpeed: 0
+    RunSpeed: 10
     JumpForce: 0
-    Duration: 60
+    Duration: 5
     CanStack: 1
     MaxStackAmount: 30
   - ID: 11001
