@@ -205,6 +205,76 @@ public partial class @PlayerInputActionSetting: IInputActionCollection2, IDispos
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Cannon"",
+            ""id"": ""bb6e0696-84f7-49db-bdef-1b59c3a571e8"",
+            ""actions"": [
+                {
+                    ""name"": ""Angle"",
+                    ""type"": ""Value"",
+                    ""id"": ""fd572485-98fe-4ab6-8ecd-39147de56f98"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb902366-6857-44d6-aad6-4c412696a776"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""5c13f871-b1c0-4e68-94f6-916ff99bcd3a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Angle"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b8704ad1-e3a9-42be-9479-63be0d541f1d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Angle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""cf66b8b8-a521-4db3-a196-b0bae32eb1c1"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Angle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6442175-0abc-4189-9380-4d42cc6f1698"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -234,6 +304,10 @@ public partial class @PlayerInputActionSetting: IInputActionCollection2, IDispos
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         m_Player_Menu = m_Player.FindAction("Menu", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        // Cannon
+        m_Cannon = asset.FindActionMap("Cannon", throwIfNotFound: true);
+        m_Cannon_Angle = m_Cannon.FindAction("Angle", throwIfNotFound: true);
+        m_Cannon_Shoot = m_Cannon.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -377,6 +451,60 @@ public partial class @PlayerInputActionSetting: IInputActionCollection2, IDispos
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Cannon
+    private readonly InputActionMap m_Cannon;
+    private List<ICannonActions> m_CannonActionsCallbackInterfaces = new List<ICannonActions>();
+    private readonly InputAction m_Cannon_Angle;
+    private readonly InputAction m_Cannon_Shoot;
+    public struct CannonActions
+    {
+        private @PlayerInputActionSetting m_Wrapper;
+        public CannonActions(@PlayerInputActionSetting wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Angle => m_Wrapper.m_Cannon_Angle;
+        public InputAction @Shoot => m_Wrapper.m_Cannon_Shoot;
+        public InputActionMap Get() { return m_Wrapper.m_Cannon; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CannonActions set) { return set.Get(); }
+        public void AddCallbacks(ICannonActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CannonActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CannonActionsCallbackInterfaces.Add(instance);
+            @Angle.started += instance.OnAngle;
+            @Angle.performed += instance.OnAngle;
+            @Angle.canceled += instance.OnAngle;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+        }
+
+        private void UnregisterCallbacks(ICannonActions instance)
+        {
+            @Angle.started -= instance.OnAngle;
+            @Angle.performed -= instance.OnAngle;
+            @Angle.canceled -= instance.OnAngle;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+        }
+
+        public void RemoveCallbacks(ICannonActions instance)
+        {
+            if (m_Wrapper.m_CannonActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICannonActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CannonActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CannonActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CannonActions @Cannon => new CannonActions(this);
     private int m_keyboardNMouseSchemeIndex = -1;
     public InputControlScheme keyboardNMouseScheme
     {
@@ -394,5 +522,10 @@ public partial class @PlayerInputActionSetting: IInputActionCollection2, IDispos
         void OnInteraction(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+    }
+    public interface ICannonActions
+    {
+        void OnAngle(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

@@ -20,7 +20,21 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	{
 		_inputActions = new PlayerInputActionSetting();
 		_inputActions.Player.SetCallbacks(this);
+		GetComponent<UnitMovement>().isControl = true;
+
 		_inputActions.Player.Enable();
+
+	}
+	public void EnableInput()
+	{
+		_inputActions.Player.Enable();
+
+	}
+	public void DisableInput()
+	{
+		GetComponent<UnitMovement>().isControl = false;
+		_inputActions.Player.Disable();
+
 	}
 
 	private void Start()
@@ -46,6 +60,8 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 		{
 			if(IsGround())
 			{
+				GetComponent<UnitMovement>().isControl = true;
+
 				OnJumping();
 			}
 			OnChangeMoveStateEvent?.Invoke();

@@ -18,6 +18,7 @@ public class UnitMovement : MonoBehaviour
 	private bool _isRun;
 	private bool _isClimbing;
 
+	public bool isControl;
 	public bool IsRun => _isRun;
 
 
@@ -43,7 +44,10 @@ public class UnitMovement : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		Move();
+		if (isControl)
+		{
+			Move();
+		}
 	}
 
 	public void SetStat(UnitStat stat)
