@@ -8,9 +8,12 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	[SerializeField] private PlayerInputActionSetting _inputActions;
 
 	public event Action OnInteractionEvent;
+	public event Action OnChangeMoveStateEvent;
 
 	private bool _firstTabSuccess = false;
 	private bool _isRunning = false;
+
+	
 
 
 	private void Awake()
@@ -39,8 +42,16 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 
 	public void OnJump(InputAction.CallbackContext context)
 	{
-		if(context.performed)
-			OnJumping();
+		if (context.performed)
+		{
+			if(IsGround())
+			{
+				OnJumping();
+			}
+			OnChangeMoveStateEvent?.Invoke();
+			
+		}
+			
 	}
 
 	public void OnLook(InputAction.CallbackContext context)
@@ -95,5 +106,14 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 
 	}
 
+	private bool IsGround()
+	{
+		Ray ray = new Ray(transform.position + transform.up * 0.1f, Vector3.down);
+		if (Physics.Raycast(ray, 0.15f, ~(1 << 6)))
+		{
+			return true;
+		}
+		return false;
+	}
 	
 }

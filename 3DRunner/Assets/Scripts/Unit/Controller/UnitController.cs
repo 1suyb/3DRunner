@@ -18,8 +18,7 @@ public class UnitController : MonoBehaviour
 	}
 	public void OnJumping()
 	{
-		if(IsGround())
-			Jumping?.Invoke();
+		Jumping?.Invoke();
 	}
 	public void OnLooking(Vector2 dir)
 	{
@@ -33,14 +32,5 @@ public class UnitController : MonoBehaviour
 	public void OnStopRunning()
 	{
 		StopRunning?.Invoke();
-	}
-	private bool IsGround()
-	{
-		Ray ray = new Ray(transform.position + transform.up * 0.1f, Vector3.down);
-		if (Physics.Raycast(ray, 0.15f, ~(1 << 6)))
-		{
-			return true;
-		}
-		return false;
 	}
 }

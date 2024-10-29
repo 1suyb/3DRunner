@@ -50,4 +50,9 @@ public class ConditionSystem
 		Condition -= value;
 	}
 
+	public bool IsRemain(int value)
+	{
+		return Condition-value >= 0;
+	}
+
 }
