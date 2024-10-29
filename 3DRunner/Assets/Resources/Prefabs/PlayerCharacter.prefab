@@ -232,9 +232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76fa1d8c00a4e0448a05e188053b1f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 384
 --- !u!114 &490040929953646453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +273,9 @@ MonoBehaviour:
   _lookYSensitivity: 0.1
   minXLook: 45
   maxXLook: -80
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 384
 --- !u!114 &6737346276951394763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +398,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 439
+    m_Bits: 951
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

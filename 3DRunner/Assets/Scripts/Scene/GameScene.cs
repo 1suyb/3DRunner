@@ -9,7 +9,6 @@ public class GameScene : MonoBehaviour
 		PlayerCharacter,
 		Canvas
 	}
-	UIConditionPanel ui;
 	private void Awake()
 	{
 		GameObject obj = ResourceManager.Instantiate(Objects.PlayerCharacter.ToString());

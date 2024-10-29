@@ -7,13 +7,10 @@ using UnityEngine.InputSystem.Interactions;
 public class PlayerController : UnitController, PlayerInputActionSetting.IPlayerActions
 {
 	[SerializeField] private PlayerInputActionSetting _inputActions;
-	[SerializeField] private LayerMask layerMask;
 
 	private bool _firstTabSuccess = false;
 	private bool _isRunning = false;
 
-	private bool _isLookInteractableObject = false;
-	private InteractionObject _tempInteractable = null;
 
 	private void Awake()
 	{
@@ -27,10 +24,7 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
-	private void Update()
-	{
-		DetectInteractObject();
-	}
+
 
 	public void ToggleCursor(bool toggle)
 	{
@@ -100,27 +94,5 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 
 	}
 
-	public void DetectInteractObject()
-	{
-		Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-		Ray ray = Camera.main.ScreenPointToRay(screenCenter);
-		Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward);
-		if (Physics.Raycast(ray, out RaycastHit hit, 10f, layerMask))
-		{
-			if (!_isLookInteractableObject)
-			{
-				_isLookInteractableObject = true;
-				_tempInteractable = hit.collider.gameObject.GetComponentInParent<InteractionObject>();
-				_tempInteractable.ShowInformation();
-			}
-		}
-		else
-		{
-			if (_isLookInteractableObject)
-			{
-				_isLookInteractableObject= false;
-				_tempInteractable.CloseInformation();
-			}
-		}
-	}
+	
 }
