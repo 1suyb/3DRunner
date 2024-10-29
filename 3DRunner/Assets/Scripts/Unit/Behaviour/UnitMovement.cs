@@ -2,9 +2,22 @@ using UnityEngine;
 
 public class UnitMovement : MonoBehaviour
 {
-	private float _runSpeed;
-	private float _walkSpeed;
-	private float _jump;
+	public enum State
+	{
+		Walk,
+		Run,
+		Climb,
+		OutofControl
+	}
+	private UnitStat _stat;
+	private State _state;
+
+	public State MoveState
+	{
+		get { return _state; }
+	}
+
+
 
 	[SerializeField] private int _jumpSpendStamina;
 	[SerializeField] private int _runSpendStamina;
@@ -15,11 +28,10 @@ public class UnitMovement : MonoBehaviour
 	private PlayerController _controller;
 	private Rigidbody _rigidbody;
 	private UnitStatHandler _statHandler;
-	private bool _isRun;
-	private bool _isClimbing;
 
-	public bool isControl;
-	public bool IsRun => _isRun;
+	public bool IsRun => MoveState==State.Run;
+	public bool IsClimb => MoveState==State.Climb;
+	public bool IsOutofControl => MoveState==State.OutofControl;
 
 
 	private void Awake()
@@ -27,34 +39,33 @@ public class UnitMovement : MonoBehaviour
 		_controller = GetComponent<PlayerController>();
 		_rigidbody = GetComponent<Rigidbody>();
 		_statHandler = GetComponent<UnitStatHandler>();
+
 	}
 
 	private void Start()
 	{
+		_stat = _statHandler.CurrentStat;
 		_controller.Moving += SetMoveDir;
 		_controller.Jumping += Jump;
 		_controller.Running += Run;
 		_controller.StopRunning += StopRun;
 		_controller.OnChangeMoveStateEvent += SetMovementState;
-		SetStat(_statHandler.CurrentStat);
-		_statHandler.OnchangeStat += SetStat;
-
 
 	}
 
 	private void FixedUpdate()
 	{
-		if (isControl)
+		if (!IsOutofControl)
 		{
 			Move();
 		}
-	}
-
-	public void SetStat(UnitStat stat)
-	{
-		_runSpeed = stat.RunSpeed;
-		_walkSpeed = stat.WalkSpeed;
-		_jump = stat.JumpForce;
+		else
+		{
+			if (transform.IsGround())
+			{
+				TakeControl();
+			}
+		}
 	}
 
 	public void SetMoveDir(Vector2 moveDir)
@@ -69,21 +80,21 @@ public class UnitMovement : MonoBehaviour
 		}
 		else
 		{
-			_rigidbody.velocity = transform.up * (_moveDir.z * _walkSpeed * 0.5f)
-	+ transform.right * (_moveDir.x * _walkSpeed * 0.5f);
+			_rigidbody.velocity = transform.up * (_moveDir.z * _stat.WalkSpeed * 0.5f)
+	+ transform.right * (_moveDir.x * _stat.WalkSpeed * 0.5f);
 			_rigidbody.useGravity = false;
 		}
 	}
 	private void Move()
 	{
-		if (_isClimbing)
+		if (IsClimb)
 		{
 			Climbing();
 		}
 		else
 		{
 			_rigidbody.useGravity = true;
-			float speed = _isRun && _moveDir.z > 0 ? _runSpeed : _walkSpeed;
+			float speed = IsRun && _moveDir.z > 0 ? _stat.RunSpeed : _stat.WalkSpeed;
 			_rigidbody.velocity = transform.forward * (_moveDir.z * speed)
 				+ transform.right * (_moveDir.x * speed)
 				+ (transform.up * _rigidbody.velocity.y);
@@ -94,7 +105,7 @@ public class UnitMovement : MonoBehaviour
 	{
 		if (GetComponent<ConditionHandler>().GetStamina.IsRemain(_jumpSpendStamina))
 		{
-			_rigidbody.AddForce(transform.up * _jump, ForceMode.Impulse);
+			_rigidbody.AddForce(transform.up * _stat.JumpForce, ForceMode.Impulse);
 			GetComponent<ConditionHandler>().GetStamina.Subtract(_jumpSpendStamina);
 		}
 
@@ -104,26 +115,33 @@ public class UnitMovement : MonoBehaviour
 	{
 		if (IsContactWall())
 		{
-			if (_isClimbing)
+			if (IsClimb)
 			{
-				_isClimbing = false;
+				
 				this.transform.position += this.transform.forward * 0.5f +
 					this.transform.up * 1.45f;
+				_state = State.Walk;
 			}
 			else
 			{
-				_isClimbing = true;
+				_state = State.Climb;
+				_rigidbody.useGravity = false;
 			}
+		}
+		else
+		{
+			_state |= State.Walk;
+			_rigidbody.useGravity = true;
 		}
 	}
 
 	private void Run()
 	{
-		_isRun = true;
+		_state = State.Run;
 	}
 	private void StopRun()
 	{
-		_isRun = false;
+		_state = State.Walk;
 	}
 
 	private bool IsEndWall()
@@ -144,6 +162,15 @@ public class UnitMovement : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	public void LoseControl()
+	{
+		_state = State.OutofControl;
+	}
+	public void TakeControl()
+	{
+		_state = State.Walk;
 	}
 
 }

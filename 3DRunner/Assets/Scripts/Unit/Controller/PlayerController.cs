@@ -20,8 +20,6 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	{
 		_inputActions = new PlayerInputActionSetting();
 		_inputActions.Player.SetCallbacks(this);
-		GetComponent<UnitMovement>().isControl = true;
-
 		_inputActions.Player.Enable();
 
 	}
@@ -32,7 +30,6 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	}
 	public void DisableInput()
 	{
-		GetComponent<UnitMovement>().isControl = false;
 		_inputActions.Player.Disable();
 
 	}
@@ -58,16 +55,12 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	{
 		if (context.performed)
 		{
-			if(IsGround())
+			if(transform.IsGround())
 			{
-				GetComponent<UnitMovement>().isControl = true;
-
 				OnJumping();
 			}
 			OnChangeMoveStateEvent?.Invoke();
-			
 		}
-			
 	}
 
 	public void OnLook(InputAction.CallbackContext context)
@@ -83,7 +76,8 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 	public void OnMove(InputAction.CallbackContext context)
 	{
 		OnMoveing(context.ReadValue<Vector2>());
-		if (_isRunning)
+
+		if (context.canceled && _isRunning)
 		{
 			_firstTabSuccess = false;
 			_isRunning = false;
@@ -120,16 +114,6 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 			}
 		}
 
-	}
-
-	private bool IsGround()
-	{
-		Ray ray = new Ray(transform.position + transform.up * 0.1f, Vector3.down);
-		if (Physics.Raycast(ray, 0.15f, ~(1 << 6)))
-		{
-			return true;
-		}
-		return false;
 	}
 	
 }

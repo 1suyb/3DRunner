@@ -36,6 +36,7 @@ public class Cannon : MonoBehaviour, PlayerInputActionSetting.ICannonActions
 			_target.AddForce(dir*_power, ForceMode.Impulse);
 			_inputActions.Cannon.Disable();
 			_target.gameObject.GetComponent<PlayerController>().EnableInput();
+			_target.gameObject.GetComponent<UnitMovement>().LoseControl();
 		}
 	}
 
@@ -46,6 +47,7 @@ public class Cannon : MonoBehaviour, PlayerInputActionSetting.ICannonActions
 			_target = collision.gameObject.GetComponent<Rigidbody>();
 			_target.gameObject.GetComponent<PlayerController>().DisableInput();
 			_inputActions.Cannon.Enable();
+
 		}
 	}
 }
