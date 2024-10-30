@@ -28,6 +28,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 		info.Add(_itemData.WalkSpeed.ToString());
 		info.Add(_itemData.RunSpeed.ToString());
 		info.Add(_itemData.JumpForce.ToString());
+		info.Add(_itemData.Duration.ToString());
 
 		return info;
 	}
@@ -52,7 +53,7 @@ public class ItemObject : MonoBehaviour, IInteractable
 
     public void ShowInformation()
     {
-		_popupUI = UIManager.Instance.OpenPopup<UIItemInteractPopup>(PopupUIType.ItemInfoPopup);
+		_popupUI = UIManager.Instance.OpenUI<UIItemInteractPopup>();
 		_popupUI.Init(GetItemInfoString());
     }
 	public void Interact()
@@ -62,6 +63,6 @@ public class ItemObject : MonoBehaviour, IInteractable
 
 	public void CloseInformation()
 	{
-		UIManager.Instance.ClosePopup(_popupUI.gameObject);
+		UIManager.Instance.CloseUI(_popupUI.gameObject);
 	}
 }

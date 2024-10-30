@@ -16,14 +16,14 @@ public class ItemEffectSlot : MonoBehaviour
 	}
 	public void Init(string value) 
 	{
-		if(value != "0")
+		if (value == "0")
 		{
-			this.gameObject.SetActive(true);
-			_text.text = value;
+			this.gameObject.SetActive(false);
 		}
 		else
 		{
-			this.gameObject.SetActive(false);
+			this.gameObject.SetActive(true);
+			_text.text = value;
 		}
 	}
 

@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 5483493159187078403}
   - component: {fileID: 1906507058531876877}
   m_Layer: 5
-  m_Name: Conditions
+  m_Name: UIConditionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

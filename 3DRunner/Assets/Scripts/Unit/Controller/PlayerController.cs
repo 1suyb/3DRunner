@@ -34,6 +34,7 @@ public class PlayerController : UnitController, PlayerInputActionSetting.IPlayer
 
 	}
 
+
 	private void Start()
 	{
 		Cursor.lockState = CursorLockMode.Locked;

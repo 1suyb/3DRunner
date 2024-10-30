@@ -13,11 +13,8 @@ public class GameScene : MonoBehaviour
 		GameObject obj = ResourceManager.Instantiate(Objects.PlayerCharacter.ToString());
 		obj.GetComponent<ConditionHandler>().Init();
 		GameObject uiRoot = new GameObject("SceneUIRoot");
-		List<UI> uiObjects = UIManager.Instance.OpenScene<UI>(SceneName.SampleScene, uiRoot.transform);
-		foreach(UI uiObject in uiObjects)
-		{
-			uiObject.Init();
-		}
+		UIConditionPanel conditionPanel = UIManager.Instance.OpenUI<UIConditionPanel>();
+		conditionPanel.Init();
 	}
 	private void Start()
 	{

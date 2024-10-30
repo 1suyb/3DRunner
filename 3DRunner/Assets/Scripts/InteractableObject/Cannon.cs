@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Cannon : MonoBehaviour, PlayerInputActionSetting.ICannonActions
+public class Cannon : MonoBehaviour, PlayerInputActionSetting.ICannonActions, IInteractable
 {
 	[SerializeField] private PlayerInputActionSetting _inputActions;
 	[SerializeField] private float _angleWeight;
@@ -17,6 +17,7 @@ public class Cannon : MonoBehaviour, PlayerInputActionSetting.ICannonActions
 		_inputActions = new PlayerInputActionSetting();
 		_inputActions.Cannon.SetCallbacks(this);
 	}
+
 	public void OnAngle(InputAction.CallbackContext context)
 	{
 		if (context.performed)
@@ -31,8 +32,6 @@ public class Cannon : MonoBehaviour, PlayerInputActionSetting.ICannonActions
 		{
 			Vector3 dir = Quaternion.Euler(rotZ, 0, 0) * Vector3.up;
 			dir = dir.normalized;
-			Debug.Log(dir);
-			Debug.DrawRay(this.transform.position, _power*dir,Color.red,1f);
 			_target.AddForce(dir*_power, ForceMode.Impulse);
 			_inputActions.Cannon.Disable();
 			_target.gameObject.GetComponent<PlayerController>().EnableInput();
@@ -40,14 +39,22 @@ public class Cannon : MonoBehaviour, PlayerInputActionSetting.ICannonActions
 		}
 	}
 
-	private void OnCollisionEnter(Collision collision)
+	public void ShowInformation()
 	{
-		if (collision.gameObject.CompareTag("Player"))
-		{
-			_target = collision.gameObject.GetComponent<Rigidbody>();
-			_target.gameObject.GetComponent<PlayerController>().DisableInput();
-			_inputActions.Cannon.Enable();
+		UIInteractable ui = UIManager.Instance.OpenUI<UIInteractable>();
+		ui.Init("대포", "F키를 눌러 탑승하세요");
+	}
 
-		}
+	public void Interact()
+	{
+		_target = GameManager.Instance.Player.GetComponent<Rigidbody>();
+		_target.GetComponent<PlayerController>().DisableInput();
+		_target.transform.position = this.transform.position;
+		_inputActions.Cannon.Enable();
+	}
+
+	public void CloseInformation()
+	{
+		UIManager.Instance.CloseUI<UIInteractable>();
 	}
 }
